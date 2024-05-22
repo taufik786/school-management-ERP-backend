@@ -6,7 +6,7 @@ exports.addSchool = catchAsyncErrors(async (req, res, next) => {
   res.status(201).json({
     message: "School/college added successfully.",
     success: true,
-    school,
+    data: school,
   });
 });
 
@@ -20,13 +20,13 @@ exports.editSchool = catchAsyncErrors(async (req, res, next) => {
     return res.status(500).json({
       message: "School/college not found.",
       success: false,
-      school,
+      data: school,
     });
   }
   res.status(201).json({
     message: "School/college updated successfully.",
     success: true,
-    school,
+    data: school,
   });
 });
 exports.allSchoolLists = catchAsyncErrors(async (req, res, next) => {
@@ -35,13 +35,13 @@ exports.allSchoolLists = catchAsyncErrors(async (req, res, next) => {
     return res.status(500).json({
       message: "School/college not found.",
       success: false,
-      school,
+      data: school,
     });
   }
   res.status(201).json({
     message: "School/college fetched successfully.",
     success: true,
-    school,
+    data: school,
   });
 });
 
@@ -55,13 +55,13 @@ exports.deleteSchool = catchAsyncErrors(async (req, res, next) => {
     return res.status(500).json({
       message: "School/college not found.",
       success: false,
-      school,
+      data: school,
     });
   }
   res.status(201).json({
     message: "School/college deleted successfully.",
     success: true,
-    school,
+    data: school,
   });
 });
 
@@ -71,12 +71,12 @@ exports.singleSchool = catchAsyncErrors(async (req, res, next) => {
     return res.status(500).json({
       message: "School/college not found.",
       success: false,
-      school,
+      data: school,
     });
   }
   res.status(201).json({
     message: "School/college fetched successfully.",
     success: true,
-    school,
+    data: school,
   });
 });
