@@ -15,9 +15,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Route Imports
 const user = require("./routes/user.routes");
 const schoolRoutes = require("./routes/school.routes");
+const admissionManagementRoutes = require("./routes/admission-management.routes");
 
 app.use("/api/v1", user);
 app.use("/api/v1", schoolRoutes);
+app.use("/api/v1", admissionManagementRoutes);
 
 app.use(errorMiddleware);
 
