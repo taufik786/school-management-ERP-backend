@@ -2,6 +2,14 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const SchoolModel = require("../models/schoolModels");
 
 exports.addSchool = catchAsyncErrors(async (req, res, next) => {
+  const schoolExist = await SchoolModel.findOne({ schoolName: req.body.schoolName });
+  if (schoolExist) {
+    return res.status(500).json({
+      message: "School/college already exist.",
+      success: false,
+      data: null,
+    });
+  }
   const school = await SchoolModel(req.body).save();
   res.status(201).json({
     message: "School/college added successfully.",

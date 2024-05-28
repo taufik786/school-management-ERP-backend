@@ -26,6 +26,7 @@ const studentSchema = new mongoose.Schema(
     Gender: { type: String, required: [true, "Gender is mandatory"] },
     Date_of_birth: { type: Date, required: [true, "DOB is mandatory"] },
     Religion: { type: String, required: [true, "Religion is mandatory"] },
+    Category: { type: String, required: [true, "Category is mandatory"] },
     Caste: { type: String, default: "" },
     BloodGroup: { type: String, default: "" },
     CurrentAddress: {
@@ -39,6 +40,10 @@ const studentSchema = new mongoose.Schema(
     AdmissionDate: {
       type: Date,
       required: [true, "Admission date is mandatory"],
+    },
+    Session: {
+      type: Date,
+      default: Date.now(),
     },
     Class: {
       type: String,
