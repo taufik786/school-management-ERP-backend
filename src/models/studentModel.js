@@ -4,23 +4,28 @@ const studentSchema = new mongoose.Schema(
   {
     FirstName: {
       type: String,
+      trim: true,
       required: [true, "First name is mandatory"],
     },
     MiddleName: {
       type: String,
+      trim: true,
       default: "",
     },
     LastName: {
       type: String,
+      trim: true,
       required: [true, "Last name is mandatory"],
     },
     Email: {
       type: String,
-      required: [true, "Email is mandatory"],
+      trim: true,
       lowercase: true,
+      default: "",
     },
     PhoneNumber: {
       type: String,
+      trim: true,
       required: [true, "Phone number is mandatory"],
     },
     Gender: { type: String, required: [true, "Gender is mandatory"] },
@@ -63,7 +68,7 @@ const studentSchema = new mongoose.Schema(
     MotherName: { type: String, required: [true, "Mother name is mandatory"] },
     MotherOccupation: { type: String, default: "" },
     MotherPhoneNumber: { type: String, default: "" },
-    username: { type: String, default: "" },
+    Username: { type: String, default: "", lowercase: true, trim: true },
     PreviousSchool: { type: String, default: "" },
     Remarks: { type: String, default: "" },
     IsActive: { type: Boolean, default: false },

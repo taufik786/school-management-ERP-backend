@@ -2,30 +2,35 @@ const mongoose = require("mongoose");
 
 const schoolSchema = new mongoose.Schema(
   {
-    schoolName: {
+    SchoolName: {
       type: String,
       required: [true, "School name is mandatory"],
       lowercase: true,
+      trim: true,
     },
-    email: {
+    Email: {
       type: String,
       required: [true, "School email is mandatory"],
       lowercase: true,
+      trim: true,
     },
-    phone: { type: String, required: [true, "School phone is mandatory"] },
-    address: { type: String, required: [true, "Address phone is mandatory"] },
-    directorName: {
+    PhoneNumber: {
+      type: String,
+      required: [true, "School phone is mandatory"],
+    },
+    Address: { type: String, required: [true, "Address phone is mandatory"] },
+    DirectorName: {
       type: String,
       required: [true, "Director name phone is mandatory"],
     },
-    schoolType: {
+    SchoolType: {
       type: String,
       required: [true, "School type name phone is mandatory"],
       lowercase: true,
     },
-    remarks: { type: String, default: "" },
-    established: { type: Date, default: Date.now },
-    deleted: {type: Boolean, default: false}
+    Remarks: { type: String, default: "" },
+    Established: { type: Date, default: Date.now },
+    Deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

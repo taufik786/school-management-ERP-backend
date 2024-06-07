@@ -1,6 +1,12 @@
 const express = require("express");
-const { addSchool, editSchool, allSchoolLists, deleteSchool, singleSchool } = require("../controllers/schoolControllers");
-const {isAuthenticatedUser} = require("../middleware/auth");
+const {
+  addSchool,
+  editSchool,
+  allSchoolLists,
+  deleteSchool,
+  singleSchool,
+} = require("../controllers/schoolControllers");
+const { isAuthenticatedUser } = require("../middleware/auth");
 
 const router = express.Router();
 

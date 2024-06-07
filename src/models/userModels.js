@@ -4,22 +4,37 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    name: {
+    Name: {
       type: String,
       required: [true, "Name is mandatory"],
     },
-    email: {
+    Email: {
       type: String,
       required: [true, "Email is mandatory"],
       lowercase: true,
+      trim:true
     },
-    phone: { type: String, default: "" },
-    password: { type: String, required: [true, "Password is mandatory"] },
-    role: { type: String, default: "user" },
-    deleted: { type: Boolean, default: false },
+    Username: {
+      type: String,
+      required: [true, "Username is mandatory"],
+      lowercase: true,
+      trim:true
+    },
+    PhoneNumber: { type: String, required: [true, "Phone number is mandatory"], },
+    Password: { type: String, required: [true, "Password is mandatory"] },
+    Role: { type: String, default: "user" },
+    Deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
+
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("Password")) {
+//     next();
+//   }
+
+//   this.Password = await bcrypt.hash(this.Password, 10);
+// });
 
 // JWT TOKEN
 userSchema.methods.getJWTToken = function () {
@@ -31,7 +46,7 @@ userSchema.methods.getJWTToken = function () {
 // Compare Password
 
 userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.Password);
 };
 
 module.exports = new mongoose.model("users", userSchema);
