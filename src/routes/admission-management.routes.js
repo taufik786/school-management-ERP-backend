@@ -5,7 +5,6 @@ const {
   studentDetails,
   updateStudent,
 } = require("../controllers/admission-managementControllers");
-const { isAuthenticatedUser } = require("../middleware/auth");
 
 const router = express.Router();
 

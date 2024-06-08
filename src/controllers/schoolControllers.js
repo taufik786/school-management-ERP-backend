@@ -3,6 +3,8 @@ const SchoolModel = require("../models/schoolModels");
 
 // Add School
 exports.addSchool = catchAsyncErrors(async (req, res, next) => {
+  req.body.CreatedBy = { userId: req.user._id, Name: req.user.Name };
+  req.body.UpdatedBy = { userId: req.user._id, Name: req.user.Name };
   const schoolExist = await SchoolModel.findOne({
     SchoolName: req.body.SchoolName,
   });
@@ -43,6 +45,7 @@ exports.editSchool = catchAsyncErrors(async (req, res, next) => {
       data: duplicateSchool,
     });
   }
+  req.body.UpdatedBy = { userId: req.user._id, Name: req.user.Name };
   const school = await SchoolModel.findByIdAndUpdate(
     { _id: req.body._id },
     req.body,
@@ -96,7 +99,10 @@ exports.deleteSchool = catchAsyncErrors(async (req, res, next) => {
 
 // Single School
 exports.singleSchool = catchAsyncErrors(async (req, res, next) => {
-  const school = await SchoolModel.findOne({ _id: req.params.id, Deleted:false });
+  const school = await SchoolModel.findOne({
+    _id: req.params.id,
+    Deleted: false,
+  });
   if (!school) {
     return res.status(500).json({
       message: "School/college not found.",

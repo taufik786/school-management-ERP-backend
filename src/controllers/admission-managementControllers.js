@@ -44,6 +44,9 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
   req.body.Section = section;
   req.body.Username = await checkUniqueUsername(FirstName + LastName);
 
+  req.body.CreatedBy = { userId: req.user._id, Name: req.user.Name };
+  req.body.UpdatedBy = { userId: req.user._id, Name: req.user.Name };
+
   let student = await StudentModel(req.body).save();
 
   let userModel = {
@@ -79,6 +82,7 @@ const checkUniqueUsername = async (username) => {
 
 // Update student record
 exports.updateStudent = catchAsyncErrors(async (req, res, next) => {
+  req.body.UpdatedBy = { userId: req.user._id, Name: req.user.Name };
   let student = await StudentModel.findByIdAndUpdate(
     { _id: req.body._id },
     req.body,
@@ -100,7 +104,11 @@ exports.updateStudent = catchAsyncErrors(async (req, res, next) => {
     Email: student.Email,
     PhoneNumber: student.PhoneNumber,
   };
-  await userModels.findOneAndUpdate({Username: student.Username, Deleted:false}, userModel, {new:true});
+  await userModels.findOneAndUpdate(
+    { Username: student.Username, Deleted: false },
+    userModel,
+    { new: true }
+  );
 
   res.status(200).json({
     message: "Student updated successfully.",

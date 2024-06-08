@@ -31,6 +31,8 @@ const schoolSchema = new mongoose.Schema(
     Remarks: { type: String, default: "" },
     Established: { type: Date, default: Date.now },
     Deleted: { type: Boolean, default: false },
+    CreatedBy: { type: mongoose.Schema.Types.Mixed, default: "" },
+    UpdatedBy: { type: mongoose.Schema.Types.Mixed, default: "" },
   },
   { timestamps: true }
 );

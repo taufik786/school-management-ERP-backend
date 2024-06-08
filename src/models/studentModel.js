@@ -73,6 +73,8 @@ const studentSchema = new mongoose.Schema(
     Remarks: { type: String, default: "" },
     IsActive: { type: Boolean, default: false },
     Deleted: { type: Boolean, default: false },
+    CreatedBy: { type: mongoose.Schema.Types.Mixed, default: "" },
+    UpdatedBy: { type: mongoose.Schema.Types.Mixed, default: "" },
   },
   { timestamps: true }
 );

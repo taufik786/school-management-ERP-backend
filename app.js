@@ -12,15 +12,19 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Auth middleware
+const { isAuth } = require("./src/middleware/auth");
+
 // Route Imports
 const user = require("./src/routes/user.routes");
 const schoolRoutes = require("./src/routes/school.routes");
 const admissionManagementRoutes = require("./src/routes/admission-management.routes");
-const notFoundRoutes = require("./src/routes/notFound.routes");
+const roleRoutes = require("./src/routes/role.routes");
 
 app.use("/api/v1", user);
-app.use("/api/v1", schoolRoutes);
-app.use("/api/v1", admissionManagementRoutes);
+app.use("/api/v1", isAuth, schoolRoutes);
+app.use("/api/v1", isAuth, admissionManagementRoutes);
+app.use("/api/v1", isAuth, roleRoutes);
 
 // IF API DOES NOT EXIST - GLOBAL WILDCARD
 app.use((req, res) => {
