@@ -61,7 +61,7 @@ exports.editSchool = catchAsyncErrors(async (req, res, next) => {
 
 // All School Lists
 exports.allSchoolLists = catchAsyncErrors(async (req, res, next) => {
-  const school = await SchoolModel.find({ Deleted: false });
+  const school = await SchoolModel.find({ Deleted: false }).sort({updatedAt:-1});
   if (school.length <= 0) {
     return res.status(500).json({
       message: "School/college not found.",

@@ -61,7 +61,7 @@ exports.updateRole = catchAsyncErrors(async (req, res, next) => {
 
 // All School Lists
 exports.allRoleLists = catchAsyncErrors(async (req, res, next) => {
-  const role = await RoleModel.find({ Deleted: false });
+  const role = await RoleModel.find({ Deleted: false }).sort({updatedAt:-1});
   if (role.length <= 0) {
     return res.status(500).json({
       message: "Role not found.",

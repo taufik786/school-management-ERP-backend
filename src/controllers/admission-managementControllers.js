@@ -119,7 +119,7 @@ exports.updateStudent = catchAsyncErrors(async (req, res, next) => {
 
 // Student lists
 exports.studentsList = catchAsyncErrors(async (req, res, next) => {
-  let students = await StudentModel.find();
+  let students = await StudentModel.find().sort({updatedAt:-1});
   if (students.length <= 0) {
     return res.status(404).json({
       message: "Students record does not exist.",
