@@ -5,10 +5,15 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModels");
 
 exports.isAuth = catchAsyncErrors(async (req, res, next) => {
-  const { token } = req.cookies;
+  const token = req.cookies.token || req.headers.authorization.split(" ")[1];
 
   if (!token) {
-    return next(new ErrorHander("You are not authenticated user, Please login first.", 401));
+    return next(
+      new ErrorHander(
+        "You are not authenticated user, Please login first.",
+        401
+      )
+    );
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);

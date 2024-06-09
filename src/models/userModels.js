@@ -12,15 +12,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Email is mandatory"],
       lowercase: true,
-      trim:true
+      trim: true,
     },
     Username: {
       type: String,
       required: [true, "Username is mandatory"],
       lowercase: true,
-      trim:true
+      trim: true,
     },
-    PhoneNumber: { type: String, required: [true, "Phone number is mandatory"], },
+    PhoneNumber: {
+      type: String,
+      required: [true, "Phone number is mandatory"],
+    },
     Password: { type: String, required: [true, "Password is mandatory"] },
     Role: { type: String, default: "user" },
     Deleted: { type: Boolean, default: false },

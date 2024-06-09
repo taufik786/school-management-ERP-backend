@@ -11,10 +11,13 @@ const sendToken = (user, statusCode, message, res) => {
     httpOnly: true,
   };
 
+  const userWithoutPassword = { ...user.toObject() }; // Shallow copy of the user object
+  delete userWithoutPassword.Password; // Remove the Password field from the copied object
+
   res.status(statusCode).cookie("token", token, options).json({
     message: message,
     success: true,
-    data: user,
+    data: userWithoutPassword,
     token: token,
   });
 };
