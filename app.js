@@ -20,11 +20,15 @@ const user = require("./src/routes/user.routes");
 const schoolRoutes = require("./src/routes/school.routes");
 const admissionManagementRoutes = require("./src/routes/admission-management.routes");
 const roleRoutes = require("./src/routes/role.routes");
+const classesRoutes = require("./src/routes/classes.routes");
+const staffsRoutes = require("./src/routes/staffs.routes");
 
 app.use("/api/v1", user);
 app.use("/api/v1", isAuth, schoolRoutes);
 app.use("/api/v1", isAuth, admissionManagementRoutes);
 app.use("/api/v1", isAuth, roleRoutes);
+app.use("/api/v1", isAuth, classesRoutes);
+app.use("/api/v1", isAuth, staffsRoutes);
 
 // IF API DOES NOT EXIST - GLOBAL WILDCARD
 app.use((req, res) => {

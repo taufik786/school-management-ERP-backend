@@ -4,7 +4,7 @@ const RoleModel = require("../models/roleModel");
 // Add School
 exports.createRole = catchAsyncErrors(async (req, res, next) => {
   const roleExist = await RoleModel.findOne({
-    Name: req.body.Name,
+    Role: req.body.Role,
   });
   if (roleExist) {
     return res.status(500).json({
@@ -13,8 +13,8 @@ exports.createRole = catchAsyncErrors(async (req, res, next) => {
       data: null,
     });
   }
-  req.body.CreatedBy = { userId: req.user._id, Name: req.user.Name };
-  req.body.UpdatedBy = { userId: req.user._id, Name: req.user.Name };
+  req.body.CreatedBy = { userId: req.user._id, Role: req.user.Role };
+  req.body.UpdatedBy = { userId: req.user._id, Role: req.user.Role };
 
   const role = await RoleModel(req.body).save();
   res.status(201).json({
@@ -36,7 +36,7 @@ exports.updateRole = catchAsyncErrors(async (req, res, next) => {
   }
 
   const duplicateRole = await RoleModel.findOne({
-    Name: req.body.Name,
+    Role: req.body.Role,
     _id: { $ne: req.body._id },
   });
   if (duplicateRole) {
