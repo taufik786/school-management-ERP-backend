@@ -3,16 +3,17 @@ const {
   registerUser,
   loginUser,
   logout,
-//   forgotPassword,
-//   resetPassword,
-//   getUserDetails,
-//   updatePassword,
-//   updateProfile,
-//   getAllUser,
-//   getSingleUser,
-//   updateUserRole,
-//   deleteUser,
+  //   forgotPassword,
+  //   resetPassword,
+  //   getUserDetails,
+  //   updatePassword,
+  //   updateProfile,
+  //   getAllUser,
+  //   getSingleUser,
+  //   updateUserRole,
+  //   deleteUser,
 } = require("../controllers/userController");
+const { refreshToken } = require("../controllers/tokenControllers");
 // const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 const router = express.Router();
@@ -20,6 +21,7 @@ const router = express.Router();
 router.route("/register").post(registerUser);
 
 router.route("/login").post(loginUser);
+router.route("/refreshToken").post(refreshToken);
 
 // router.route("/password/forgot").post(forgotPassword);
 

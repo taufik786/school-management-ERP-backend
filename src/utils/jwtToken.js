@@ -1,24 +1,33 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
 // Create Token and saving in cookie
-
 const sendToken = (user, statusCode, message, res) => {
-  const token = user.getJWTToken();
-
-  // options for cookie
-  const options = {
-    expires: new Date(
-      Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-  };
+  const accessToken = jwt.sign({ id: user._id },process.env.ACCESS_TOKEN_SECRET,{ expiresIn: process.env.ACCESS_TOKEN_EXPIRE });
+  const refreshToken = jwt.sign({ id: user._id },process.env.REFRESH_TOKEN_SECRET,{ expiresIn: process.env.REFRESH_TOKEN_EXPIRE });
 
   const userWithoutPassword = { ...user.toObject() }; // Shallow copy of the user object
-  delete userWithoutPassword.Password; // Remove the Password field from the copied object
+  delete userWithoutPassword.Password;
 
-  res.status(statusCode).cookie("token", token, options).json({
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    // maxAge: 15 * 60 * 1000,
+    maxAge: 60 * 1000, // 10sec
+  });
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  }); // 7 days
+
+  res.status(statusCode).json({
     message: message,
     success: true,
     data: userWithoutPassword,
-    token: token,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    tokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRE
   });
 };
 

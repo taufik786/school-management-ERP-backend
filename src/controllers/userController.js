@@ -1,4 +1,6 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModels");
@@ -55,7 +57,11 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // Logout User
 exports.logout = catchAsyncErrors(async (req, res, next) => {
-  res.cookie("token", null, {
+  res.cookie("accessToken", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.cookie("refreshToken", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
   });

@@ -52,7 +52,7 @@ exports.editSchool = catchAsyncErrors(async (req, res, next) => {
     { new: true }
   );
 
-  res.status(201).json({
+  res.status(200).json({
     message: "School/college updated successfully.",
     success: true,
     data: school,
@@ -69,7 +69,7 @@ exports.allSchoolLists = catchAsyncErrors(async (req, res, next) => {
       data: school,
     });
   }
-  res.status(201).json({
+  res.status(200).json({
     message: "School/college fetched successfully.",
     success: true,
     data: school,
@@ -90,7 +90,7 @@ exports.deleteSchool = catchAsyncErrors(async (req, res, next) => {
       data: school,
     });
   }
-  res.status(201).json({
+  res.status(200).json({
     message: "School/college deleted successfully.",
     success: true,
     data: school,
@@ -110,7 +110,7 @@ exports.singleSchool = catchAsyncErrors(async (req, res, next) => {
       data: school,
     });
   }
-  res.status(201).json({
+  res.status(200).json({
     message: "School/college fetched successfully.",
     success: true,
     data: school,
