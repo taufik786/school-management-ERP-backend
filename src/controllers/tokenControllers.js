@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const ErrorHandler = require("../utils/errorHandler");
@@ -5,10 +6,10 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModels");
 
 exports.refreshToken = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.cookies, "req.cookies111")
-  console.log(req.headers.authorization, "req.headers.authorization")
-  console.log(req.body, "req.body")
-  const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken || req.headers.authorization?.split(" ")[1];
+  const refreshToken =
+    req.cookies?.refreshToken ||
+    req.body?.refreshToken ||
+    req.headers.authorization?.split(" ")[1];
   if (!refreshToken) {
     return next(
       new ErrorHandler(
@@ -29,6 +30,9 @@ exports.refreshToken = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Invalid refresh token", 401));
   }
 
+  const userWithoutPassword = { ...user.toObject() }; // Shallow copy of the user object
+  delete userWithoutPassword.Password;
+
   const accessToken = jwt.sign(
     { id: user._id },
     process.env.ACCESS_TOKEN_SECRET,
@@ -44,8 +48,7 @@ exports.refreshToken = catchAsyncErrors(async (req, res, next) => {
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: true,
-    // maxAge: 1 * 60 * 1000,
-    maxAge: 10 * 1000,
+    maxAge: 15 * 60 * 1000, // 15min,
   });
 
   res.cookie("refreshToken", newRefreshToken, {
@@ -54,11 +57,20 @@ exports.refreshToken = catchAsyncErrors(async (req, res, next) => {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   }); // 7 days
 
+  let tokenTimer = process.env.ACCESS_TOKEN_EXPIRE;
+  // Convert into miliseconds
+  // if (tokenTimer.endsWith("s")) {
+  if (tokenTimer.endsWith("m")) {
+    let time = tokenTimer.split("m")[0];
+    tokenTimer = time * 60 * 1000;
+  }
+
   res.status(200).json({
     message: "Access token refreshed",
     success: true,
-    data: null,
+    data: userWithoutPassword,
     accessToken: accessToken,
-    refreshToken: newRefreshToken,
+    refreshToken: refreshToken,
+    tokenExpiresIn: tokenTimer,
   });
 });
